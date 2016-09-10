@@ -6,7 +6,7 @@ package com.sansar.hospitalmanagementsystem;
  */
 /**
  *
- * @author Raj
+ * @author Rasna
  */
 public class Contact extends javax.swing.JFrame {
 

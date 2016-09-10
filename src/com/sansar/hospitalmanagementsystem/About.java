@@ -7,7 +7,7 @@ package com.sansar.hospitalmanagementsystem;
 
 /**
  *
- * @author Raj
+ * @author Rasna
  */
 public class About extends javax.swing.JFrame {
 
