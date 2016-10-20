@@ -15,21 +15,21 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Raj
  */
-public class PatientRegistrationRecord extends javax.swing.JFrame {
+public class ServicesRecord extends javax.swing.JFrame {
 
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
 
     /**
-     * Creates new form PatientRegistrationRecord
+     * Creates new form ServicesRecord
      */
-    public PatientRegistrationRecord() {
+    public ServicesRecord() {
         initComponents();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-            
+
             Get_Data();
             setLocationRelativeTo(null);
         } catch (Exception e) {
@@ -38,14 +38,14 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
     }
 
     private void Get_Data() {
-        String sql = "select PatientID as 'Patient ID', PatientName as 'Patient Name',FatherName as 'Father Name',Address,ContactNo as 'Contact No',Email as 'Email ID',Age,Gen as 'Gender',BG as 'Blood Group',Remarks from Patientregistration";
+        String sql = "select ServiceID as 'Service ID', ServiceName as 'Service Name',ServiceDate as 'Service Date',PatientRegistration.PatientID as 'Patient ID',PatientName as 'Patient Name',ServiceCharges as 'Service Charges' from PatientRegistration,Services where Services.PatientID=PatientRegistration.PatientID order by PatientName";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            
+
         }
     }
 
@@ -62,7 +62,7 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Patient Registration Record");
+        setTitle("Services Record");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -92,11 +92,11 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
         );
 
         pack();
@@ -104,44 +104,37 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         try {
-Class.forName("com.mysql.jdbc.Driver");
-          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
 
             int row = jTable1.getSelectedRow();
             String table_click = jTable1.getModel().getValueAt(row, 0).toString();
-            String sql = "select * from PatientRegistration where PatientID = '" + table_click + "'";
+            String sql = " Select * from PatientRegistration,Services where Services.PatientID=PatientRegistration.PatientID and ServiceID=" + table_click + "";
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
             if (rs.next()) {
                 this.hide();
-                PatientRegistration frm = new PatientRegistration();
+                Services frm = new Services();
                 frm.setVisible(true);
-                String add1 = rs.getString("PatientID");
-                frm.txtPatientID.setText(add1);
-                String add2 = rs.getString("Patientname");
-                frm.txtPatientName.setText(add2);
-                String add3 = rs.getString("Fathername");
-                frm.txtFathername.setText(add3);
-                String add5 = rs.getString("Email");
-                frm.txtEmailID.setText(add5);
-                int add6 = rs.getInt("Age");
-                String add = Integer.toString(add6);
-                frm.txtAge.setText(add);
-                String add7 = rs.getString("Remarks");
-                frm.txtRemarks.setText(add7);
-                String add9 = rs.getString("BG");
-                frm.cmbBloodGroup.setSelectedItem(add9);
-                String add11 = rs.getString("Gen");
-                frm.cmbGender.setSelectedItem(add11);
-                String add15 = rs.getString("Address");
-                frm.txtAddress.setText(add15);
-                String add16 = rs.getString("ContactNo");
-                frm.txtContactNo.setText(add16);
-                frm.btnUpdate.setEnabled(true);
-                frm.btnDelete.setEnabled(true);
+                String add1 = rs.getString("ServiceName");
+                frm.txtServiceName.setText(add1);
+                String add2 = rs.getString("ServiceDate");
+                frm.txtServiceDate.setText(add2);
+                String add3 = rs.getString("PatientName");
+                frm.txtPatientName.setText(add3);
+                String add4 = rs.getString("PatientID");
+                frm.txtPatientID.setText(add4);
+                int add5 = rs.getInt("ServiceID");
+                String add6 = Integer.toString(add5);
+                frm.txtServiceID.setText(add6);
+                int add7 = rs.getInt("ServiceCharges");
+                String add8 = Integer.toString(add7);
+                frm.txtServiceCharges.setText(add8);
                 frm.btnSave.setEnabled(false);
-                
+                frm.btnDelete.setEnabled(true);
+                frm.btnUpdate.setEnabled(true);
             }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
@@ -149,7 +142,7 @@ Class.forName("com.mysql.jdbc.Driver");
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.hide();
-        PatientRegistration frm = new PatientRegistration();
+        Services frm = new Services();
         frm.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -170,20 +163,20 @@ Class.forName("com.mysql.jdbc.Driver");
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServicesRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServicesRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServicesRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServicesRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PatientRegistrationRecord().setVisible(true);
+                new ServicesRecord().setVisible(true);
             }
         });
     }

@@ -15,37 +15,38 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Raj
  */
-public class PatientRegistrationRecord extends javax.swing.JFrame {
+public class DoctorRecord extends javax.swing.JFrame {
 
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
 
     /**
-     * Creates new form PatientRegistrationRecord
+     * Creates new form DoctorRecord
      */
-    public PatientRegistrationRecord() {
+    public DoctorRecord() {
         initComponents();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-            
+
             Get_Data();
             setLocationRelativeTo(null);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+
         }
     }
 
     private void Get_Data() {
-        String sql = "select PatientID as 'Patient ID', PatientName as 'Patient Name',FatherName as 'Father Name',Address,ContactNo as 'Contact No',Email as 'Email ID',Age,Gen as 'Gender',BG as 'Blood Group',Remarks from Patientregistration";
+        String sql = "select DoctorID as 'Doctor ID', DoctorName as 'Doctor Name',FatherName as 'Father Name',Address,ContactNo as 'Contact No',Email as 'Email ID',Qualifications,Specialization,Gender,BloodGroup as 'Blood Group',DateOfJoining as 'Joining Date' from Doctor order by DoctorName";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            
+
         }
     }
 
@@ -62,7 +63,7 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Patient Registration Record");
+        setTitle("Doctors Record");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -92,11 +93,11 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
         );
 
         pack();
@@ -104,35 +105,36 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         try {
-Class.forName("com.mysql.jdbc.Driver");
-          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
 
             int row = jTable1.getSelectedRow();
             String table_click = jTable1.getModel().getValueAt(row, 0).toString();
-            String sql = "select * from PatientRegistration where PatientID = '" + table_click + "'";
+            String sql = "select * from Doctor where DoctorID = '" + table_click + "'";
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
             if (rs.next()) {
                 this.hide();
-                PatientRegistration frm = new PatientRegistration();
+                Doctor frm = new Doctor();
                 frm.setVisible(true);
-                String add1 = rs.getString("PatientID");
-                frm.txtPatientID.setText(add1);
-                String add2 = rs.getString("Patientname");
-                frm.txtPatientName.setText(add2);
+                String add1 = rs.getString("DoctorID");
+                frm.txtDoctorID.setText(add1);
+                String add2 = rs.getString("Doctorname");
+                frm.txtDoctorName.setText(add2);
                 String add3 = rs.getString("Fathername");
                 frm.txtFathername.setText(add3);
                 String add5 = rs.getString("Email");
                 frm.txtEmailID.setText(add5);
-                int add6 = rs.getInt("Age");
-                String add = Integer.toString(add6);
-                frm.txtAge.setText(add);
-                String add7 = rs.getString("Remarks");
-                frm.txtRemarks.setText(add7);
-                String add9 = rs.getString("BG");
+                String add6 = rs.getString("Qualifications");
+                frm.txtQualifications.setText(add6);
+                String add7 = rs.getString("Specialization");
+                frm.txtSpecialisation.setText(add7);
+                String add9 = rs.getString("BloodGroup");
                 frm.cmbBloodGroup.setSelectedItem(add9);
-                String add11 = rs.getString("Gen");
+                String add11 = rs.getString("Gender");
                 frm.cmbGender.setSelectedItem(add11);
+                String add14 = rs.getString("DateOfJoining");
+                frm.txtDateOfJoining.setText(add14);
                 String add15 = rs.getString("Address");
                 frm.txtAddress.setText(add15);
                 String add16 = rs.getString("ContactNo");
@@ -140,7 +142,7 @@ Class.forName("com.mysql.jdbc.Driver");
                 frm.btnUpdate.setEnabled(true);
                 frm.btnDelete.setEnabled(true);
                 frm.btnSave.setEnabled(false);
-                
+
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -149,7 +151,7 @@ Class.forName("com.mysql.jdbc.Driver");
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.hide();
-        PatientRegistration frm = new PatientRegistration();
+        Doctor frm = new Doctor();
         frm.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -164,26 +166,26 @@ Class.forName("com.mysql.jdbc.Driver");
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoctorRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoctorRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoctorRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PatientRegistrationRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoctorRecord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PatientRegistrationRecord().setVisible(true);
+                new DoctorRecord().setVisible(true);
             }
         });
     }

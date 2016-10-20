@@ -189,7 +189,7 @@ public class Login extends javax.swing.JFrame {
       try
       {
            Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
+          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
 
           pst=con.prepareStatement(sql);
           rs= pst.executeQuery();

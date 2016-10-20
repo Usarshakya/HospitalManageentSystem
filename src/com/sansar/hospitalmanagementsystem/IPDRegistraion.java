@@ -30,7 +30,44 @@ public class IPDRegistraion extends javax.swing.JFrame {
     public IPDRegistraion() {
         initComponents();
         setLocationRelativeTo(null);
+        txtIPD.setText("");
+        txtDate.setText("");
+        txtPatientID.setText("");
+        txtPatientName.setText("");
+        cmbSex.setSelectedIndex(-1);
+        txtAge.setText("");
+        txtFatherName.setText("");
+        txtMotherName.setText("");
+        txtSpouseName.setText("");
+        //txtSpouseName.setEnabled(false);
+        txtOccupation.setText("");
+        txtMobileNo.setText("");
+        txtResidentalAddress.setText("");
+        txtParmanentAddress.setText("");
+        txtEmail.setText("");
+        txtReligion.setText("");
+        txtNationality.setText("");
+        cmbMaritalStatus.setSelectedIndex(-1);
+        txtTellNo.setText("");
+        cmbBloodGroup.setSelectedIndex(-1);
+        
+        
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnSave.setEnabled(true);
+
+        txtPatientID.requestDefaultFocus();
+        
+       
     }
+    
+     private void check(){
+            if(cmbMaritalStatus.getSelectedItem().equals("Single")){
+            txtSpouseName.setEnabled(false);
+        
+        }     
+     }
+
 
     private void Reset() {
         txtIPD.setText("");
@@ -42,6 +79,7 @@ public class IPDRegistraion extends javax.swing.JFrame {
         txtFatherName.setText("");
         txtMotherName.setText("");
         txtSpouseName.setText("");
+       // txtSpouseName.setEnabled(false);
         txtOccupation.setText("");
         txtMobileNo.setText("");
         txtResidentalAddress.setText("");
@@ -545,7 +583,7 @@ public class IPDRegistraion extends javax.swing.JFrame {
                 return;
 
             }
-            
+
             if (txtPatientID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter patient No", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -560,31 +598,28 @@ public class IPDRegistraion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please select Sex", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (txtAge.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter age", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (txtFatherName.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter Father's name", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (txtMotherName.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter Mother's name", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
-            if (txtSpouseName.getText().equals("single")) {
-                txtSpouseName.setEnabled(false);
-              
-            }
-            else{
-                  JOptionPane.showMessageDialog(this, "Please enter Spouse's name", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
+
+            if (txtSpouseName.getText().equals("")) {
+               JOptionPane.showMessageDialog(this, "Please enter Spouse's name", "Error", JOptionPane.ERROR_MESSAGE);
+              return;
+
+           }
+
             if (txtOccupation.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter occupation", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -593,42 +628,42 @@ public class IPDRegistraion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please enter Mobile no", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-             
+
             if (txtParmanentAddress.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter Permanent address", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (txtResidentalAddress.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter residental address", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (txtEmail.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter email", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
-             if (txtReligion.getText().equals("")) {
+
+            if (txtReligion.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter religion", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-             
-              if (txtNationality.getText().equals("")) {
+
+            if (txtNationality.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter nationality", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (cmbBloodGroup.getSelectedItem().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please select blood group", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (txtTellNo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter telephone no.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (cmbMaritalStatus.getSelectedItem().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please select Marital ", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -644,26 +679,27 @@ public class IPDRegistraion extends javax.swing.JFrame {
                 txtPatientID.requestDefaultFocus();
                 return;
             }
-            String sql = "insert into inpatientregistration(Date,Patient_No,Patient_Name,Sex,Age,FatherName,motherName,spouseName,occupation,email,religion,nationality,marital_status,telNo,bloodgroup,mobileNo,ParmanentAddress,resedentalAddress)values('"+txtDate.getText()+"','" + txtPatientID.getText()+"','" + txtPatientName.getText() + "','"+cmbSex.getSelectedItem()+"','"+txtAge.getText()+"','"+txtFatherName.getText()+"','"+txtMotherName.getText()+"','"+txtSpouseName.getText()+"','" + txtOccupation.getText() + "','"+txtEmail.getText()+"','"+txtReligion.getText()+"','"+txtNationality.getText()+"','"+cmbMaritalStatus.getSelectedItem()+"','"+txtTellNo.getText()+"','"+cmbBloodGroup.getSelectedItem()+"','"+txtMobileNo.getText()+"','" + txtParmanentAddress.getText() + "','" + txtResidentalAddress.getText() + "')";
+            String sql = "insert into inpatientregistration(Date,Patient_No,Patient_Name,Sex,Age,FatherName,motherName,spouseName,occupation,email,religion,nationality,marital_status,telNo,bloodgroup,mobileNo,ParmanentAddress,resedentalAddress)values('" + txtDate.getText() + "','" + txtPatientID.getText() + "','" + txtPatientName.getText() + "','" + cmbSex.getSelectedItem() + "','" + txtAge.getText() + "','" + txtFatherName.getText() + "','" + txtMotherName.getText() + "','" + txtSpouseName.getText() + "','" + txtOccupation.getText() + "','" + txtEmail.getText() + "','" + txtReligion.getText() + "','" + txtNationality.getText() + "','" + cmbMaritalStatus.getSelectedItem() + "','" + txtTellNo.getText() + "','" + cmbBloodGroup.getSelectedItem() + "','" + txtMobileNo.getText() + "','" + txtParmanentAddress.getText() + "','" + txtResidentalAddress.getText() + "')";
 
             pst = con.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(this, "Successfully Registered", "Patient", JOptionPane.INFORMATION_MESSAGE);
             btnSave.setEnabled(false);
 
-        } catch (HeadlessException | SQLException |ClassNotFoundException ex) {
+        } catch (HeadlessException | SQLException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-       this.hide();
-       MainMenu frm=new MainMenu();
-       frm.setVisible(true);
+        this.hide();
+        MainMenu frm = new MainMenu();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         Reset();
+        check();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
