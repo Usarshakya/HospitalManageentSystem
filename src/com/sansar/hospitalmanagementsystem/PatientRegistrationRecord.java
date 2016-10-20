@@ -13,7 +13,7 @@ import net.proteanit.sql.DbUtils;
  */
 /**
  *
- * @author Raj
+ * @author Rasna
  */
 public class PatientRegistrationRecord extends javax.swing.JFrame {
 

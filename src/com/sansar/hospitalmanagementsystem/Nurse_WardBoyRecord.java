@@ -15,7 +15,7 @@ import net.proteanit.sql.DbUtils;
 
 /**
  *
- * @author Raj
+ * @author Rasna
  */
 public class Nurse_WardBoyRecord extends javax.swing.JFrame {
 Connection con=null;

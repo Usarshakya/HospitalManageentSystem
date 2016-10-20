@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Raj
+ * @author Rasna
  */
 public class UsersRegistration extends javax.swing.JFrame {
 Connection con=null;

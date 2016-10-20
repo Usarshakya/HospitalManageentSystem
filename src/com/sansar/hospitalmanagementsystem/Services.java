@@ -16,7 +16,8 @@ import net.proteanit.sql.DbUtils;
  */
 /**
  *
- * @author Raj
+ * @author Rasna
+ 
  */
 public class Services extends javax.swing.JFrame {
 
@@ -120,8 +121,10 @@ public class Services extends javax.swing.JFrame {
         jLabel36.setText("(DD/MM/YYYY)");
 
         txtPatientID.setEditable(false);
+        txtPatientID.setBackground(new java.awt.Color(204, 204, 255));
 
         txtPatientName.setEditable(false);
+        txtPatientName.setBackground(new java.awt.Color(204, 204, 255));
 
         txtServiceCharges.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {

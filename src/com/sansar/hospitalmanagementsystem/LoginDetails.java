@@ -6,7 +6,7 @@ package com.sansar.hospitalmanagementsystem;
  */
 /**
  *
- * @author Raj
+ * @author Rasna
  */
 import java.awt.HeadlessException;
 import java.sql.*;
