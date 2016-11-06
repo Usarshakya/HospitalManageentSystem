@@ -31,9 +31,7 @@ PreparedStatement pst=null;
     public Ward() {
         initComponents();
         try{
-   Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+   con=Connect.ConnectDB();
         Get_Data();
         setLocationRelativeTo(null);
     }catch (Exception e) {
@@ -323,9 +321,7 @@ PreparedStatement pst=null;
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try{
-   Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+   con=Connect.ConnectDB();
             if (txtWardName.getText().equals("")) {
                 JOptionPane.showMessageDialog( this, "Please enter ward name","Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -360,23 +356,21 @@ PreparedStatement pst=null;
             JOptionPane.showMessageDialog(this,"Successfully saved","Ward Record",JOptionPane.INFORMATION_MESSAGE);
             btnSave.setEnabled(false);
             Get_Data();
-        }catch(HeadlessException | SQLException |ClassNotFoundException ex){
+        }catch(HeadlessException | SQLException ex){
             JOptionPane.showMessageDialog(this,ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         try{
-   Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+   con=Connect.ConnectDB();
             String sql= "update Ward set Wardtype='"+ cmbWardType.getSelectedItem() + "',NoOfBeds=" + txtNoOfbeds.getText() + ",Charges=" + txtCharges.getText() + " where Wardname='" + txtWardName.getText() + "'";
             pst=con.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(this,"Successfully updated","Room Record",JOptionPane.INFORMATION_MESSAGE);
             btnUpdate.setEnabled(false);
             Get_Data();
-        }catch(HeadlessException | SQLException |ClassNotFoundException ex){
+        }catch(HeadlessException | SQLException ex){
             JOptionPane.showMessageDialog(this,ex);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -387,9 +381,7 @@ PreparedStatement pst=null;
             int P = JOptionPane.showConfirmDialog(null," Are you sure want to delete ?","Confirmation",JOptionPane.YES_NO_OPTION);
             if (P==0)
             {
-                  Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+       con=Connect.ConnectDB();
 
                 String sql= "delete from ward where wardname = '" + txtWardName.getText() + "'";
                 pst=con.prepareStatement(sql);
@@ -397,7 +389,7 @@ PreparedStatement pst=null;
                 JOptionPane.showMessageDialog(this,"Successfully deleted","Record",JOptionPane.INFORMATION_MESSAGE);
                 Reset();
             }
-        }catch(HeadlessException | SQLException |ClassNotFoundException ex){
+        }catch(HeadlessException | SQLException  ex){
             JOptionPane.showMessageDialog(this,ex);
         }
 
@@ -409,9 +401,7 @@ PreparedStatement pst=null;
 
     private void Room_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Room_tableMouseClicked
         try{
-   Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+  con=Connect.ConnectDB();
             int row= Room_table.getSelectedRow();
             String table_click= Room_table.getModel().getValueAt(row, 0).toString();
             String sql= "select * from ward where wardname = '" + table_click + "'";

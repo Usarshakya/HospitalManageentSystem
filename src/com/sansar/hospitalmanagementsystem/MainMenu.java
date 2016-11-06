@@ -46,6 +46,8 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -173,6 +175,18 @@ public class MainMenu extends javax.swing.JFrame {
         IPD.add(jMenu4);
 
         jMenu9.setText("Discharge");
+
+        jMenuItem15.setText("Room");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem15);
+
+        jMenuItem16.setText("Ward");
+        jMenu9.add(jMenuItem16);
+
         IPD.add(jMenu9);
 
         jMenu10.setText("Billing");
@@ -278,7 +292,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         this.hide();
-        Nurse_Wardboy frm = new Nurse_Wardboy();
+        Nurse_WardBoy frm = new Nurse_WardBoy();
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
@@ -289,13 +303,21 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
+        this.hide();
+        PatientAdmit_Ward frm = new PatientAdmit_Ward();
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
- PatientAdmit_Room frm= new PatientAdmit_Room();
-    frm.setVisible(true);
+        PatientAdmit_Room frm = new PatientAdmit_Room();
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        this.hide();
+        PatientDischarge_Room frm = new PatientDischarge_Room();
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,6 +372,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

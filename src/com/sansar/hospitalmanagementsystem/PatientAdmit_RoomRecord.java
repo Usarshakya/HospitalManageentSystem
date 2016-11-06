@@ -1,7 +1,7 @@
 package com.sansar.hospitalmanagementsystem;
 
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -11,35 +11,42 @@ import net.proteanit.sql.DbUtils;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Rasna
  */
 public class PatientAdmit_RoomRecord extends javax.swing.JFrame {
-Connection con=null;
-ResultSet rs=null;
-PreparedStatement pst=null;
+
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+
     /**
      * Creates new form PatientAdmit_RoomRecord
      */
     public PatientAdmit_RoomRecord() {
         initComponents();
-        con= Connect.ConnectDB();
-        Get_Data();
-        setLocationRelativeTo(null);
-    }
- private void Get_Data(){
-         String sql="Select AdmitID as 'Admit ID',PatientRegistration.PatientID as 'Patient ID',PatientRegistration.PatientName as 'Patient Name',PatientRegistration.Gen as 'Gender',PatientRegistration.BG as 'Blood Group',Disease,AdmitDate as 'Admit Date',Room.RoomNo as 'Room No',Doctor.DoctorID as 'Doctor ID',DoctorName as 'Doctor Name',AdmitPatient_Room.AP_Remarks as 'Remarks' from Room,Doctor,PatientRegistration,AdmitPatient_Room where Room.RoomNo=AdmitPatient_Room.RoomNo and Doctor.DoctorID=AdmitPatient_Room.DoctorID and PatientRegistration.PatientID=AdmitPatient_Room.PatientID order by admitdate";
-         try{
-         pst=con.prepareStatement(sql);
-          rs= pst.executeQuery();
-         jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-         }catch(Exception e){
+        try {
+          con=Connect.ConnectDB();
+            Get_Data();
+            setLocationRelativeTo(null);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-          
-}
+        }
     }
+
+    private void Get_Data() {
+        String sql = "Select AdmitID as 'Admit ID',PatientRegistration.PatientID as 'Patient ID',PatientRegistration.PatientName as 'Patient Name',PatientRegistration.Gen as 'Gender',PatientRegistration.BG as 'Blood Group',Disease,AdmitDate as 'Admit Date',Room.RoomNo as 'Room No',Doctor.DoctorID as 'Doctor ID',DoctorName as 'Doctor Name',AdmitPatient_Room.AP_Remarks as 'Remarks' from Room,Doctor,PatientRegistration,AdmitPatient_Room where Room.RoomNo=AdmitPatient_Room.RoomNo and Doctor.DoctorID=AdmitPatient_Room.DoctorID and PatientRegistration.PatientID=AdmitPatient_Room.PatientID order by admitdate";
+        try {
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,56 +103,56 @@ PreparedStatement pst=null;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-    try{
-            con=Connect.ConnectDB();
-            int row= jTable1.getSelectedRow();
-            String table_click= jTable1.getModel().getValueAt(row, 0).toString();
-            String sql="Select * from Room,Doctor,PatientRegistration,AdmitPatient_Room where Room.RoomNo=AdmitPatient_Room.RoomNo and Doctor.DoctorID=AdmitPatient_Room.DoctorID and PatientRegistration.PatientID=AdmitPatient_Room.PatientID and AdmitID=" + table_click + "";   
-            pst=con.prepareStatement(sql);
-            rs=  pst.executeQuery();
-            if(rs.next()){
+        try {
+  con=Connect.ConnectDB();
+            int row = jTable1.getSelectedRow();
+            String table_click = jTable1.getModel().getValueAt(row, 0).toString();
+            String sql = "Select * from Room,Doctor,PatientRegistration,AdmitPatient_Room where Room.RoomNo=AdmitPatient_Room.RoomNo and Doctor.DoctorID=AdmitPatient_Room.DoctorID and PatientRegistration.PatientID=AdmitPatient_Room.PatientID and AdmitID=" + table_click + "";            
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
                 this.hide();
                 PatientAdmit_Room frm = new PatientAdmit_Room();
                 frm.setVisible(true);
-                String add1=rs.getString("DoctorID");
+                String add1 = rs.getString("DoctorID");
                 frm.txtDoctorID.setText(add1);
-                String add2=rs.getString("Doctorname");
+                String add2 = rs.getString("Doctorname");
                 frm.txtDoctorName.setText(add2);
-                String add3=rs.getString("PatientID");
+                String add3 = rs.getString("PatientID");
                 frm.PatientID.setText(add3);
-                String add5=rs.getString("PatientName");
+                String add5 = rs.getString("PatientName");
                 frm.txtPatientName.setText(add5);
-                String add6=rs.getString("Gen");
+                String add6 = rs.getString("Gen");
                 frm.txtGender.setText(add6);
-                String add7=rs.getString("BG");
+                String add7 = rs.getString("BG");
                 frm.txtBloodGroup.setText(add7);
-                String add9=rs.getString("Disease");
+                String add9 = rs.getString("Disease");
                 frm.txtDisease.setText(add9);
-                String add11=rs.getString("AdmitDate");
+                String add11 = rs.getString("AdmitDate");
                 frm.txtAdmitDate.setText(add11);
-                String add14=rs.getString("RoomNo");
+                String add14 = rs.getString("RoomNo");
                 frm.cmbRoomNo1.setSelectedItem(add14);
                 frm.cmbRoomNo.setSelectedItem(add14);
-                String add15=rs.getString("AP_Remarks");
+                String add15 = rs.getString("AP_Remarks");
                 frm.txtRemarks.setText(add15);
                 int add16 = rs.getInt("AdmitID");
-                String add17= Integer.toString(add16);
+                String add17 = Integer.toString(add16);
                 frm.txtAdmitID.setText(add17);
                 
                 frm.btnUpdate.setEnabled(true);
                 frm.btnDelete.setEnabled(true);
                 frm.btnSave.setEnabled(false);
-             
+                
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this,ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      this.hide();
-       PatientAdmit_Room frm = new PatientAdmit_Room();
-       frm.setVisible(true);
+        this.hide();
+        PatientAdmit_Room frm = new PatientAdmit_Room();
+        frm.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     /**

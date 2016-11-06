@@ -17,7 +17,7 @@ import net.proteanit.sql.DbUtils;
 /**
  *
  * @author Rasna
- 
+ *
  */
 public class Services extends javax.swing.JFrame {
 
@@ -37,9 +37,7 @@ public class Services extends javax.swing.JFrame {
 
     private void Get_Data1() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con = Connect.ConnectDB();
             String sql = "select PatientID as 'Patient ID', PatientName as 'Patient Name' from Patientregistration order by PatientName";
 
             pst = con.prepareStatement(sql);
@@ -92,6 +90,7 @@ public class Services extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnGetData = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         txtServiceID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -248,6 +247,14 @@ public class Services extends javax.swing.JFrame {
             }
         });
 
+        btnCancel.setBackground(new java.awt.Color(153, 153, 255));
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -259,7 +266,8 @@ public class Services extends javax.swing.JFrame {
                     .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -275,7 +283,9 @@ public class Services extends javax.swing.JFrame {
                 .addComponent(btnUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGetData)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancel)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,9 +328,7 @@ public class Services extends javax.swing.JFrame {
 
     private void tblPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPatientMouseClicked
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con = Connect.ConnectDB();
             int row = tblPatient.getSelectedRow();
             String table_click = tblPatient.getModel().getValueAt(row, 0).toString();
             String sql = "select * from PatientRegistration where PatientID = '" + table_click + "'";
@@ -349,10 +357,7 @@ public class Services extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
-      
+            con = Connect.ConnectDB();
 
             if (txtServiceName.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter service name", "Error", JOptionPane.ERROR_MESSAGE);
@@ -377,7 +382,7 @@ public class Services extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Successfully saved", "Record", JOptionPane.INFORMATION_MESSAGE);
             btnSave.setEnabled(false);
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -386,9 +391,7 @@ public class Services extends javax.swing.JFrame {
         try {
             int P = JOptionPane.showConfirmDialog(null, " Are you sure want to delete ?", "Confirmation", JOptionPane.YES_NO_OPTION);
             if (P == 0) {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+                con = Connect.ConnectDB();
                 String sql = "delete from Services where ServiceID = " + txtServiceID.getText() + "";
                 pst = con.prepareStatement(sql);
                 pst.execute();
@@ -396,23 +399,21 @@ public class Services extends javax.swing.JFrame {
 
                 Reset();
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con = Connect.ConnectDB();
             String sql = "update Services set Servicename='" + txtServiceName.getText() + "',ServiceDate='" + txtServiceDate.getText() + "',PatientID='" + txtPatientID.getText() + "',ServiceCharges=" + txtServiceCharges.getText() + " where ServiceID=" + txtServiceID.getText() + "";
             pst = con.prepareStatement(sql);
             pst.execute();
 
             JOptionPane.showMessageDialog(this, "Successfully updated", "Record", JOptionPane.INFORMATION_MESSAGE);
             btnUpdate.setEnabled(false);
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -430,6 +431,12 @@ public class Services extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtServiceChargesKeyTyped
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.hide();
+        MainMenu frm = new MainMenu();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -461,6 +468,7 @@ public class Services extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
     public javax.swing.JButton btnDelete;
     private javax.swing.JButton btnGetData;
     private javax.swing.JButton btnNew;

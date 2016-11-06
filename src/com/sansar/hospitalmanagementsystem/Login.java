@@ -5,7 +5,6 @@
  */
 package com.sansar.hospitalmanagementsystem;
 
-
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -27,7 +26,6 @@ public class Login extends javax.swing.JFrame {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
-
 
     /**
      * Creates new form MainFrame
@@ -184,60 +182,52 @@ public class Login extends javax.swing.JFrame {
             return;
 
         }
-        String sql= "select * from users where UserName= '" + txtUserName.getText() + "' and user_Password ='" + txtPassword.getText() + "'";
-      
-      try
-      {
-           Class.forName("com.mysql.jdbc.Driver");
-          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
+        String sql = "select * from users where UserName= '" + txtUserName.getText() + "' and user_Password ='" + txtPassword.getText() + "'";
 
-          pst=con.prepareStatement(sql);
-          rs= pst.executeQuery();
-          if (rs.next()){
-             this.hide();
-             MainMenu frm=new MainMenu();
-             frm.setVisible(true);
-          }
-          else{
-              
-            JOptionPane.showMessageDialog(null, "Login Failed..Try again !","Access denied",JOptionPane.ERROR_MESSAGE);
-          }
-      }catch(SQLException | HeadlessException |ClassNotFoundException e){
-         JOptionPane.showMessageDialog(null, e); 
-          
-    }                                     
+        try {
+            con = Connect.ConnectDB();
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                this.hide();
+                MainMenu frm = new MainMenu();
+                frm.setVisible(true);
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Login Failed..Try again !", "Access denied", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
 
     }//GEN-LAST:event_btnOkMouseClicked
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
- if (evt.getKeyCode()==KeyEvent.VK_ENTER){
-          
-      String sql= "select * from users where UserName= '" + txtUserName.getText() + "' and user_Password ='" + txtPassword.getText() + "'";
-      try
-      {
-                     Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
-          pst=con.prepareStatement(sql);
-          rs= pst.executeQuery();
-          if (rs.next()){
-             this.hide();
-             MainMenu frm=new MainMenu();
-             frm.setVisible(true);
-          }
-          else{
-              
-            JOptionPane.showMessageDialog(null, "Login Failed..Try again !","Access denied",JOptionPane.ERROR_MESSAGE);
-            txtUserName.setText("");
-            txtPassword.setText("");
-            txtUserName.requestDefaultFocus();
-         }
-      }catch(SQLException | HeadlessException |ClassNotFoundException e){
-         JOptionPane.showMessageDialog(null, e); 
-          
-    }            
-     }
-    
+            String sql = "select * from users where UserName= '" + txtUserName.getText() + "' and user_Password ='" + txtPassword.getText() + "'";
+            try {
+                con = Connect.ConnectDB();
+                pst = con.prepareStatement(sql);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    this.hide();
+                    MainMenu frm = new MainMenu();
+                    frm.setVisible(true);
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Login Failed..Try again !", "Access denied", JOptionPane.ERROR_MESSAGE);
+                    txtUserName.setText("");
+                    txtPassword.setText("");
+                    txtUserName.requestDefaultFocus();
+                }
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(null, e);
+
+            }
+        }
+
     }//GEN-LAST:event_txtPasswordKeyPressed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

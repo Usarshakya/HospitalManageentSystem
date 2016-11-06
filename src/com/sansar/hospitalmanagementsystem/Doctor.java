@@ -367,9 +367,7 @@ private void Reset() {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con=Connect.ConnectDB();
             if (txtDoctorID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter doctor id", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -431,7 +429,7 @@ private void Reset() {
             JOptionPane.showMessageDialog(this, "Successfully saved", "Doctor Record", JOptionPane.INFORMATION_MESSAGE);
             btnSave.setEnabled(false);
 
-        } catch (HeadlessException | SQLException | ClassNotFoundException ex) {
+        } catch (HeadlessException | SQLException  ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -440,9 +438,7 @@ private void Reset() {
         try {
             int P = JOptionPane.showConfirmDialog(null, " Are you sure want to delete ?", "Confirmation", JOptionPane.YES_NO_OPTION);
             if (P == 0) {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+                 con=Connect.ConnectDB();
                 String sql = "delete from Doctor where DoctorID = '" + txtDoctorID.getText() + "'";
                 pst = con.prepareStatement(sql);
                 pst.execute();
@@ -450,16 +446,14 @@ private void Reset() {
 
                 Reset();
             }
-        } catch (HeadlessException | SQLException | ClassNotFoundException ex) {
+        } catch (HeadlessException | SQLException  ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con=Connect.ConnectDB();
             String sql = "update Doctor set Doctorname='" + txtDoctorName.getText() + "',FatherName='" + txtFathername.getText() + "',Email='" + txtEmailID.getText() + "',ContactNo='" + txtContactNo.getText() + "',Qualifications='" + txtQualifications.getText() + "',Specialization='" + txtSpecialisation.getText() + "',Gender='" + cmbGender.getSelectedItem() + "',BloodGroup='" + cmbBloodGroup.getSelectedItem() + "',DateOfJoining='" + txtDateOfJoining.getText() + "',Address='" + txtAddress.getText() + "' where DoctorID='" + txtDoctorID.getText() + "'";
 
             pst = con.prepareStatement(sql);
@@ -467,7 +461,7 @@ private void Reset() {
             JOptionPane.showMessageDialog(this, "Successfully updated", "Doctor Record", JOptionPane.INFORMATION_MESSAGE);
             btnUpdate.setEnabled(false);
 
-        } catch (HeadlessException | SQLException | ClassNotFoundException ex) {
+        } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed

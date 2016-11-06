@@ -27,9 +27,7 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
     public PatientRegistrationRecord() {
         initComponents();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-            
+            con = Connect.ConnectDB();
             Get_Data();
             setLocationRelativeTo(null);
         } catch (Exception e) {
@@ -45,7 +43,7 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            
+
         }
     }
 
@@ -104,9 +102,7 @@ public class PatientRegistrationRecord extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         try {
-Class.forName("com.mysql.jdbc.Driver");
-          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con = Connect.ConnectDB();
             int row = jTable1.getSelectedRow();
             String table_click = jTable1.getModel().getValueAt(row, 0).toString();
             String sql = "select * from PatientRegistration where PatientID = '" + table_click + "'";
@@ -140,7 +136,7 @@ Class.forName("com.mysql.jdbc.Driver");
                 frm.btnUpdate.setEnabled(true);
                 frm.btnDelete.setEnabled(true);
                 frm.btnSave.setEnabled(false);
-                
+
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);

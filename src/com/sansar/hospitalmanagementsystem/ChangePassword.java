@@ -218,9 +218,7 @@ public class ChangePassword extends javax.swing.JFrame {
                 return;
             }
 
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con=Connect.ConnectDB();
             String sql = "select Username,User_Password from users where Username='" + txtUsername.getText() + "' and User_Password= '" + txtOldPassword.getText() + "'";
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -228,9 +226,7 @@ public class ChangePassword extends javax.swing.JFrame {
                 String usrname = rs.getString("username").trim();
                 String passwd = rs.getString("user_password").trim();
                 if (uName.equals(usrname) && OldPass.equals(passwd)) {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+                    con=Connect.ConnectDB();
                     String sql1 = "update users set User_password= '" + Newpass + "' where Username= '" + uName + "' and User_password = '" + OldPass + "'";
                     Statement stmt = con.createStatement();
                     stmt.execute(sql1.toString());
@@ -247,7 +243,7 @@ public class ChangePassword extends javax.swing.JFrame {
                     return;
                 }
             }
-        } catch (SQLException | HeadlessException | ClassNotFoundException ex) {
+        } catch (SQLException | HeadlessException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_btnChangePasswordActionPerformed
@@ -301,9 +297,7 @@ public class ChangePassword extends javax.swing.JFrame {
                     return;
                 }
 
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+                con=Connect.ConnectDB();
                 String sql = "select Username,User_Password from users where Username='" + txtUsername.getText() + "' and User_Password= '" + txtOldPassword.getText() + "'";
                 pst = con.prepareStatement(sql);
                 rs = pst.executeQuery();
@@ -311,9 +305,7 @@ public class ChangePassword extends javax.swing.JFrame {
                     String usrname = rs.getString("username").trim();
                     String passwd = rs.getString("user_password").trim();
                     if (uName.equals(usrname) && OldPass.equals(passwd)) {
-                        Class.forName("com.mysql.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+                         con=Connect.ConnectDB();
                         String sql1 = "update users set User_password= '" + Newpass + "' where Username= '" + uName + "' and User_password = '" + OldPass + "'";
                         Statement stmt = con.createStatement();
                         stmt.execute(sql1.toString());
@@ -330,7 +322,7 @@ public class ChangePassword extends javax.swing.JFrame {
                         return;
                     }
                 }
-            } catch (SQLException | HeadlessException | ClassNotFoundException ex) {
+            } catch (SQLException | HeadlessException ex) {
                 JOptionPane.showMessageDialog(this, ex);
             }
 

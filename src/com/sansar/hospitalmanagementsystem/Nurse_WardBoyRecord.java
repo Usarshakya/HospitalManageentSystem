@@ -1,6 +1,5 @@
 package com.sansar.hospitalmanagementsystem;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,42 +11,43 @@ import net.proteanit.sql.DbUtils;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Rasna
  */
 public class Nurse_WardBoyRecord extends javax.swing.JFrame {
-Connection con=null;
-ResultSet rs=null;
-PreparedStatement pst=null;
+
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+
     /**
      * Creates new form Nurse_WardBoyRecord
      */
     public Nurse_WardBoyRecord() {
         initComponents();
-        try{
-Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
-        Get_Data();
-        setLocationRelativeTo(null);
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(null, e);
-    }
-        
-        }
- private void Get_Data(){
-        String sql="select ID, W_N_name as 'Name',Category,Address,ContactNo as 'Contact No',Email as 'Email ID',Qualifications,BloodGroup as 'Blood Group',DateOfJoining as 'Joining Date' from Wardboy_Nurse_tbl order by W_N_name";
-        try{
-         pst=con.prepareStatement(sql);
-          rs= pst.executeQuery();
-         jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-         }catch(Exception e){
+        try {
+            con = Connect.ConnectDB();
+            Get_Data();
+            setLocationRelativeTo(null);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-          
-}
+        }
+
     }
+
+    private void Get_Data() {
+        String sql = "select ID, W_N_name as 'Name',Category,Address,ContactNo as 'Contact No',Email as 'Email ID',Qualifications,BloodGroup as 'Blood Group',DateOfJoining as 'Joining Date' from Wardboy_Nurse_tbl order by W_N_name";
+        try {
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,51 +101,49 @@ Class.forName("com.mysql.jdbc.Driver");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-   try{
-Class.forName("com.mysql.jdbc.Driver");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
-            int row= jTable1.getSelectedRow();
-            String table_click= jTable1.getModel().getValueAt(row, 0).toString();
-            String sql= "select * from Wardboy_Nurse_tbl where ID = '" + table_click + "'";
-            pst=con.prepareStatement(sql);
-            rs=  pst.executeQuery();
-            if(rs.next()){
+        try {
+            con=Connect.ConnectDB();
+            int row = jTable1.getSelectedRow();
+            String table_click = jTable1.getModel().getValueAt(row, 0).toString();
+            String sql = "select * from Wardboy_Nurse_tbl where ID = '" + table_click + "'";
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
                 this.hide();
-                Nurse_Wardboy frm = new Nurse_Wardboy();
+                Nurse_WardBoy frm = new Nurse_WardBoy();
                 frm.setVisible(true);
-                String add1=rs.getString("ID");
+                String add1 = rs.getString("ID");
                 frm.txtID.setText(add1);
-                String add2=rs.getString("W_N_name");
+                String add2 = rs.getString("W_N_name");
                 frm.txtName.setText(add2);
-                String add3=rs.getString("Category");
+                String add3 = rs.getString("Category");
                 frm.cmbCategory.setSelectedItem(add3);
-                String add5=rs.getString("Email");
+                String add5 = rs.getString("Email");
                 frm.txtEmailID.setText(add5);
-                String add6=rs.getString("Qualifications");
+                String add6 = rs.getString("Qualifications");
                 frm.txtQualifications.setText(add6);
-                String add9=rs.getString("BloodGroup");
+                String add9 = rs.getString("BloodGroup");
                 frm.cmbBloodGroup.setSelectedItem(add9);
-                String add14=rs.getString("DateOfJoining");
+                String add14 = rs.getString("DateOfJoining");
                 frm.txtDateOfJoining.setText(add14);
-                String add15=rs.getString("Address");
+                String add15 = rs.getString("Address");
                 frm.txtAddress.setText(add15);
-                String add16=rs.getString("ContactNo");
+                String add16 = rs.getString("ContactNo");
                 frm.txtContactNo.setText(add16);
                 frm.btnUpdate.setEnabled(true);
                 frm.btnDelete.setEnabled(true);
                 frm.btnSave.setEnabled(false);
-             
+
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this,ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.hide();
-       Nurse_Wardboy frm = new Nurse_Wardboy();
-       frm.setVisible(true);
+        Nurse_WardBoy frm = new Nurse_WardBoy();
+        frm.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     /**

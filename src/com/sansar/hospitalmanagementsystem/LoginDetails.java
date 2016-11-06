@@ -25,9 +25,7 @@ public class LoginDetails extends javax.swing.JFrame {
     public LoginDetails() {
         initComponents();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitalmanagementsystem", "root", "");
-
+            con = Connect.ConnectDB();
             Get_Data();
             setLocationRelativeTo(null);
         } catch (Exception e) {
